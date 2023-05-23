@@ -27,6 +27,7 @@ const FavoritePage = () => {
       {favorities.length > 0 &&
         favorities.map((favorite) => (
           <VacanciesItem
+            data-elem={`vacancy-${favorite.id}`}
             key={v4()}
             vacancy={favorite}
             findFavorites={findFavorites}

@@ -19,7 +19,10 @@ const VacanciesItem = ({ vacancy, findFavorites }) => {
           {vacancy.profession}
         </Link>
 
-        <button onClick={() => handleFavorite(vacancy)}>
+        <button
+          data-elem={`vacancy-${vacancy.id}-shortlist-button`}
+          onClick={() => handleFavorite(vacancy)}
+        >
           {isFavotire ? (
             <svg
               width="22"
@@ -52,7 +55,6 @@ const VacanciesItem = ({ vacancy, findFavorites }) => {
           )}
         </button>
       </div>
-      {vacancy.firm_name}
       <div className="py-3 flex items-center gap-3">
         <p>
           з/п {vacancy.payment_from} - {vacancy.payment_to} {vacancy.currency}

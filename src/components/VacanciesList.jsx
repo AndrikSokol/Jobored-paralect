@@ -78,6 +78,7 @@ const VacanciesList = ({
         searchedVacancies.map((vacancy) => (
           <VacanciesItem
             key={v4()}
+            data-elem={`vacancy-${vacancy.id}`}
             vacancy={vacancy}
             findFavorites={findFavorites}
           />

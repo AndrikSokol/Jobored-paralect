@@ -31,6 +31,7 @@ const IndexPage = () => {
         </div>
         <div className="w-full">
           <TextInput
+            data-elem="search-input"
             onChange={(event) => (search = event.target.value)}
             size="md"
             raduis="lg"
@@ -54,6 +55,7 @@ const IndexPage = () => {
             withAsterisk
             rightSection={
               <Button
+                data-elem="search-button"
                 onClick={findSearchingVacancies}
                 className="bg-[#5E96FC] mr-[50px] h-[28px] rounded-lg "
               >

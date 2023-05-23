@@ -88,6 +88,7 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies }) => {
       <div className="py-5">
         <h2 className="font-bold py-[6px]">Отрасль</h2>
         <MultiSelect
+          data-elem="industry-select"
           placeholder="Выберете отрасль"
           data={industries.map((industry) => ({
             value: industry.key,
@@ -98,12 +99,14 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies }) => {
       </div>
       <h2 className="font-bold">Оклад</h2>
       <NumberInput
+        data-elem="salary-from-input"
         mt="sm"
         placeholder="От"
         min={0}
         {...form.getInputProps("payment_from")}
       />
       <NumberInput
+        data-elem="salary-to-input"
         mt="sm"
         placeholder="До"
         min={1}

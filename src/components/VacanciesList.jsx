@@ -9,7 +9,7 @@ const VacanciesList = ({
   filter,
   filterVacancies,
 }) => {
-  const { setValue, storedValue } = useLocalStorage("favorite", "");
+  const { setValue, storedValue } = useLocalStorage("favorites", "");
   const [vacancies, setVacancies] = React.useState([]);
 
   React.useEffect(() => {
@@ -69,7 +69,7 @@ const VacanciesList = ({
   }
   const searchedVacancies = getSearchedVacancies();
 
-  function findFavorites() {
+  function addFavorites() {
     setValue(vacancies.filter((vacancy) => vacancy.isFavorite === true));
   }
   return (
@@ -80,7 +80,7 @@ const VacanciesList = ({
             key={v4()}
             data-elem={`vacancy-${vacancy.id}`}
             vacancy={vacancy}
-            findFavorites={findFavorites}
+            addFavorites={addFavorites}
           />
         ))}
     </>

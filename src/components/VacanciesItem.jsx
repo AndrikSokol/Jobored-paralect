@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const VacanciesItem = ({ vacancy, findFavorites }) => {
+const VacanciesItem = ({ vacancy, addFavorites }) => {
   const [isFavotire, setIsFavorite] = React.useState(vacancy.isFavorite);
-  function handleFavorite(vacancy) {
+  async function handleFavorite(vacancy) {
     setIsFavorite((prev) => !prev);
     vacancy.isFavorite = !vacancy.isFavorite;
-    findFavorites();
+    addFavorites();
   }
 
   return (

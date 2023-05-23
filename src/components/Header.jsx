@@ -2,11 +2,10 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
-  const [isIndex, setIsIndex] = React.useState(true);
   const { pathname } = useLocation();
   let subpage;
   if (pathname === "/") subpage = "home";
-  else if (pathname === "/favorite") subpage = "favorite";
+  else if (pathname === "/favorites") subpage = "favorites";
 
   return (
     <header className="bg-white p-6">
@@ -34,8 +33,8 @@ const Header = () => {
             Поиск Вакансий
           </Link>
           <Link
-            to="/favorite"
-            className={subpage === "favorite" ? "text-[#5E96FC]" : ""}
+            to="/favorites"
+            className={subpage === "favorites" ? "text-[#5E96FC]" : ""}
           >
             Избранное
           </Link>

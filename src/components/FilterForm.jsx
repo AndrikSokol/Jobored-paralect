@@ -68,21 +68,21 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies }) => {
     <form className="bg-white p-5 rounded-lg border border-gray-200 w-[300px]">
       <div className="flex justify-between gap-2 items-center ">
         <h1 className="font-bold text-xl">Фильтры</h1>
-        <div className="flex items-center gap-1">
-          <h2 className="text-sm text-gray-300">Сбросить всё</h2>
-          <CloseButton
-            onClick={() => {
-              form.setValues({
-                industry: "",
-                payment_from: "",
-                payment_to: "",
-              });
-              setVacancies([]);
-            }}
-            title="Close popover"
-            size="lg"
-            iconSize={12}
-          />
+        <div
+          onClick={() => {
+            form.setValues({
+              industry: "",
+              payment_from: "",
+              payment_to: "",
+            });
+            setVacancies([]);
+          }}
+          className="flex items-center gap-1"
+        >
+          <h2 className="text-sm text-gray-300 hover:text-[#92C1FF] active:text-[#5E96FC] cursor-pointer">
+            Сбросить всё
+          </h2>
+          <CloseButton title="Close popover" size="lg" iconSize={12} />
         </div>
       </div>
       <div className="py-5">
@@ -113,6 +113,7 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies }) => {
         {...form.getInputProps("payment_to")}
       />
       <Button
+        data-elem="search-button"
         onClick={fetchVacancies}
         className="text-center bg-[#5E96FC] rounded-lg w-full mt-5"
       >

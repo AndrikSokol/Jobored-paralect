@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import VacanciesItem from "../components/VacanciesItem";
 import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
-const FavoritePage = () => {
-  const { setValue, storedValue } = useLocalStorage("favorite", "");
+const FavoritesPage = () => {
+  const { setValue, storedValue } = useLocalStorage("favorites", "");
   const [favorities, setFavorities] = React.useState(storedValue);
-  function findFavorites() {
+  function addFavorites() {
     setValue(favorities.filter((vacancy) => vacancy.isFavorite === true));
   }
   return (
@@ -30,11 +30,11 @@ const FavoritePage = () => {
             data-elem={`vacancy-${favorite.id}`}
             key={v4()}
             vacancy={favorite}
-            findFavorites={findFavorites}
+            addFavorites={addFavorites}
           />
         ))}
     </div>
   );
 };
 
-export default FavoritePage;
+export default FavoritesPage;

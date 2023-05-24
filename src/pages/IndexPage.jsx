@@ -1,23 +1,20 @@
 import React from "react";
 import { TextInput, Button, Pagination } from "@mantine/core";
-import axios from "axios";
 import FilterForm from "../components/FilterForm";
 import VacanciesList from "../components/VacanciesList";
 
 const IndexPage = () => {
   const [activePage, setActivePage] = React.useState(1);
-  const [pages, setPages] = React.useState(0);
+  const [pages, setPages] = React.useState(25);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filter, setFilter] = React.useState({});
   const [vacancies, setVacancies] = React.useState([]);
+
   function findSearchingVacancies(event) {
     event.preventDefault();
     setSearchQuery(search);
   }
   let search;
-  function findTotalPage(vacancies) {
-    setPages(vacancies / 5);
-  }
 
   return (
     <div className=" py-10 max-w-[80%] mx-auto">
@@ -64,17 +61,17 @@ const IndexPage = () => {
             }
           />
           <VacanciesList
-            findTotalPage={findTotalPage}
             searchQuery={searchQuery}
             filter={filter}
             filterVacancies={vacancies}
+            activePage={activePage}
           />
 
           <div className="mt-10 flex justify-center">
             <Pagination
               value={activePage}
               onChange={setActivePage}
-              total={pages}
+              total={25}
             />
           </div>
         </div>

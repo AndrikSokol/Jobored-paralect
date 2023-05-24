@@ -5,41 +5,25 @@ import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
 const VacanciesList = ({
   searchQuery,
-  findTotalPage,
   filter,
   filterVacancies,
+  activePage,
 }) => {
   const { setValue, storedValue } = useLocalStorage("favorites", "");
   const [vacancies, setVacancies] = React.useState([]);
 
   React.useEffect(() => {
-    findTotalPage(vacancies);
-  }, [vacancies.length]);
-
-  React.useEffect(() => {
+    console.log("ef0");
     setVacancies(filterVacancies);
   }, [filterVacancies]);
 
-  if (storedValue.length > 0) {
-  }
   React.useEffect(() => {
-    const vac = [...vacancies, ...storedValue];
-
-    vac.filter(
-      (value, index, self) =>
-        index ===
-        self.findIndex(
-          (t) => t.id === value.id && t.profession === value.profession
-        )
-    );
-    setVacancies(vac);
-  }, [storedValue]);
-  console.log(vacancies);
-  if (vacancies.length == 0) {
+    console.log("ef1");
+    setVacancies([]);
     async function fetchVacancies() {
       try {
         const { data } = await axios.get(
-          "https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/",
+          `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?page=${activePage}`,
           {
             headers: {
               "x-secret-key": " GEU4nvd3rej*jeh.eqp",
@@ -57,7 +41,64 @@ const VacanciesList = ({
       }
     }
     fetchVacancies();
-  }
+  }, [activePage]);
+
+  React.useEffect(() => {
+    console.log("ef2");
+
+    if (storedValue.length > 0) {
+      const vac = [...vacancies, ...storedValue];
+      storedValue.map((vl) => {
+        const index = vac.findIndex(
+          (vacancy) =>
+            vacancy.profession === vl.profession && vacancy.isFavorite == false
+        );
+        console.log(index);
+        if (index != -1) {
+          vac.splice(index, 1);
+        }
+      });
+      setVacancies(vac);
+    }
+  }, [storedValue]);
+
+  // function meshVacanciesAndStoredValue() {
+  //   if (storedValue.length > 0) {
+  //     const filtered = storedValue.map((vl) => {
+  //       const index = vacancies.findIndex(
+  //         (vac) => vac.id === vl.id && vac.profession === vl.profession
+  //       );
+  //       vacancies.splice(index, 1);
+  //     });
+  //     setVacancies(filtered);
+  //   }
+  // }
+
+  console.log(vacancies);
+
+  // if (vacancies.length == 0) {
+  //   async function fetchVacancies() {
+  //     try {
+  //       const { data } = await axios.get(
+  //         `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?page=${activePage}`,
+  //         {
+  //           headers: {
+  //             "x-secret-key": " GEU4nvd3rej*jeh.eqp",
+  //             "X-Api-App-Id":
+  //               "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
+  //           },
+  //         }
+  //       );
+
+  //       data.objects.map((object) => {
+  //         setVacancies((prev) => [...prev, { ...object, isFavorite: false }]);
+  //       });
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   fetchVacancies();
+  // }
 
   function getSearchedVacancies() {
     if (searchQuery) {
@@ -72,6 +113,7 @@ const VacanciesList = ({
   function addFavorites() {
     setValue(vacancies.filter((vacancy) => vacancy.isFavorite === true));
   }
+
   return (
     <>
       {searchedVacancies?.length > 0 &&

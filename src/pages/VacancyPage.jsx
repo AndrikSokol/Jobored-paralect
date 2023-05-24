@@ -17,7 +17,6 @@ const VacancyPage = () => {
             },
           }
         );
-        console.log(data);
         setVacancy(data);
       } catch (error) {
         console.log(error);

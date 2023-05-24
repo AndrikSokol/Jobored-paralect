@@ -21,6 +21,7 @@ const IndexPage = () => {
       <div className=" flex mx-auto justify-center gap-[28px] ">
         <div>
           <FilterForm
+            activePage={activePage}
             searchQuery={searchQuery}
             setFilter={setFilter}
             setVacancies={setVacancies}

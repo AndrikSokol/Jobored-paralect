@@ -11,31 +11,33 @@ const VacanciesList = ({
 }) => {
   const { setValue, storedValue } = useLocalStorage("favorites", "");
   const [vacancies, setVacancies] = React.useState([]);
-
+  console.log(storedValue);
+  const vacanciesFromAPI = [];
   React.useEffect(() => {
-    console.log("ef0");
     setVacancies(filterVacancies);
   }, [filterVacancies]);
 
   React.useEffect(() => {
-    console.log("ef1");
-    setVacancies([]);
-    async function fetchVacancies() {
+    function fetchVacancies() {
       try {
-        const { data } = await axios.get(
-          `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?page=${activePage}`,
-          {
-            headers: {
-              "x-secret-key": " GEU4nvd3rej*jeh.eqp",
-              "X-Api-App-Id":
-                "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
-            },
-          }
-        );
-
-        data.objects.map((object) => {
-          setVacancies((prev) => [...prev, { ...object, isFavorite: false }]);
-        });
+        setVacancies([]);
+        axios
+          .get(
+            `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?page=${activePage}`,
+            {
+              headers: {
+                "x-secret-key": " GEU4nvd3rej*jeh.eqp",
+                "X-Api-App-Id":
+                  "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
+              },
+            }
+          )
+          .then(({ data }) => {
+            data.objects.map((object) => {
+              vacanciesFromAPI.push({ ...object, isFavorite: false });
+            });
+            concatVacanciesAndStoredValue();
+          });
       } catch (error) {
         console.log(error);
       }
@@ -43,62 +45,24 @@ const VacanciesList = ({
     fetchVacancies();
   }, [activePage]);
 
-  React.useEffect(() => {
-    console.log("ef2");
-
+  function concatVacanciesAndStoredValue() {
+    debugger;
     if (storedValue.length > 0) {
-      const vac = [...vacancies, ...storedValue];
-      storedValue.map((vl) => {
-        const index = vac.findIndex(
-          (vacancy) =>
-            vacancy.profession === vl.profession && vacancy.isFavorite == false
+      const newVacancies = vacanciesFromAPI.map((vacancy) => {
+        const index = storedValue.find(
+          (vl) => vacancy.id === vl.id && vacancy.profession === vl.profession
         );
         console.log(index);
-        if (index != -1) {
-          vac.splice(index, 1);
+        if (index != undefined) {
+          vacancy.isFavorite = true;
         }
+        return vacancy;
       });
-      setVacancies(vac);
+      setVacancies(newVacancies);
+    } else {
+      setVacancies(vacanciesFromAPI);
     }
-  }, [storedValue]);
-
-  // function meshVacanciesAndStoredValue() {
-  //   if (storedValue.length > 0) {
-  //     const filtered = storedValue.map((vl) => {
-  //       const index = vacancies.findIndex(
-  //         (vac) => vac.id === vl.id && vac.profession === vl.profession
-  //       );
-  //       vacancies.splice(index, 1);
-  //     });
-  //     setVacancies(filtered);
-  //   }
-  // }
-
-  console.log(vacancies);
-
-  // if (vacancies.length == 0) {
-  //   async function fetchVacancies() {
-  //     try {
-  //       const { data } = await axios.get(
-  //         `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?page=${activePage}`,
-  //         {
-  //           headers: {
-  //             "x-secret-key": " GEU4nvd3rej*jeh.eqp",
-  //             "X-Api-App-Id":
-  //               "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
-  //           },
-  //         }
-  //       );
-
-  //       data.objects.map((object) => {
-  //         setVacancies((prev) => [...prev, { ...object, isFavorite: false }]);
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   fetchVacancies();
-  // }
+  }
 
   function getSearchedVacancies() {
     if (searchQuery) {

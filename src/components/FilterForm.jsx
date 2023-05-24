@@ -3,20 +3,19 @@ import { useForm } from "@mantine/form";
 import { NumberInput, Button, CloseButton, MultiSelect } from "@mantine/core";
 import axios from "axios";
 
-const FilterForm = ({ searchQuery, setFilter, setVacancies }) => {
+const FilterForm = ({ searchQuery, setFilter, setVacancies, activePage }) => {
   const [industries, setIndustries] = React.useState([]);
   async function fetchVacancies(event) {
     try {
       event.preventDefault();
       const { payment_from, payment_to, industry } = form.values;
       setFilter({ payment_from, payment_to, industry, searchQuery });
-      let query = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=1&${
+      let query = `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?published=1&page=${activePage}&${
         searchQuery ? "keyword=" + searchQuery + "&" : ""
       }${payment_from ? "payment_from=" + payment_from + "&" : ""}${
         payment_to ? "payment_to=" + payment_to + "&" : ""
       }${industry.length > 0 ? "catalogues=" + industry + "&" : ""}`;
       query = query.slice(0, -1);
-      console.log(query);
       const { data } = await axios.get(query, {
         headers: {
           "x-secret-key": " GEU4nvd3rej*jeh.eqp",
@@ -42,7 +41,6 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies }) => {
             },
           }
         );
-        console.log(data);
         data.map((industry) => {
           setIndustries((prev) => [
             ...prev,

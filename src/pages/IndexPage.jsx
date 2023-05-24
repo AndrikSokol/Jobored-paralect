@@ -18,7 +18,7 @@ const IndexPage = () => {
 
   return (
     <div className=" py-10 max-w-[80%] mx-auto">
-      <div className=" flex mx-auto justify-center gap-[28px] ">
+      <div className="grid sm:flex  mx-auto justify-center gap-[28px] ">
         <div>
           <FilterForm
             activePage={activePage}

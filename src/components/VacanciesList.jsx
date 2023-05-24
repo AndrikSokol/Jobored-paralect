@@ -3,6 +3,8 @@ import axios from "axios";
 import VacanciesItem from "./VacanciesItem";
 import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
+import HumanIcon from "./UI/HumanIcon";
+import Loader from "./UI/Loader/Loader";
 const VacanciesList = ({
   searchQuery,
   filter,
@@ -11,15 +13,19 @@ const VacanciesList = ({
 }) => {
   const { setValue, storedValue } = useLocalStorage("favorites", "");
   const [vacancies, setVacancies] = React.useState([]);
+  const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
   console.log(storedValue);
   const vacanciesFromAPI = [];
   React.useEffect(() => {
-    setVacancies(filterVacancies);
+    if (filter.length > 0) {
+      setVacancies(filterVacancies);
+    }
   }, [filterVacancies]);
 
   React.useEffect(() => {
     function fetchVacancies() {
       try {
+        setIsVacanciesLoading(true);
         setVacancies([]);
         axios
           .get(
@@ -37,6 +43,7 @@ const VacanciesList = ({
               vacanciesFromAPI.push({ ...object, isFavorite: false });
             });
             concatVacanciesAndStoredValue();
+            setIsVacanciesLoading(false);
           });
       } catch (error) {
         console.log(error);
@@ -46,7 +53,6 @@ const VacanciesList = ({
   }, [activePage]);
 
   function concatVacanciesAndStoredValue() {
-    debugger;
     if (storedValue.length > 0) {
       const newVacancies = vacanciesFromAPI.map((vacancy) => {
         const index = storedValue.find(
@@ -80,6 +86,7 @@ const VacanciesList = ({
 
   return (
     <>
+      {isVacanciesLoading && <Loader />}
       {searchedVacancies?.length > 0 &&
         searchedVacancies.map((vacancy) => (
           <VacanciesItem

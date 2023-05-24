@@ -9,8 +9,8 @@ const Header = () => {
 
   return (
     <header className="bg-white p-6">
-      <div className="max-w-[80%] mx-auto flex">
-        <Link to="/" className="flex gap-3 items-center">
+      <div className="max-w-[95%] sm:max-w-[80%] mx-auto flex">
+        <Link to="/" className="flex gap-2 items-center">
           <svg
             width="30"
             height="30"
@@ -25,10 +25,10 @@ const Header = () => {
               fill="#5E96FC"
             />
           </svg>
-          <h1 className="font-bold text-2xl">Jabored</h1>
+          <h1 className="font-bold  text-lg sm:text-2xl">Jabored</h1>
         </Link>
 
-        <div className="w-full flex justify-center gap-[60px] items-center">
+        <div className="w-full flex justify-center gap-2 sm:gap-[60px] items-center">
           <Link to="/" className={subpage === "home" ? "text-[#5E96FC]" : ""}>
             Поиск Вакансий
           </Link>

@@ -7,6 +7,7 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies, activePage }) => {
   const [industries, setIndustries] = React.useState([]);
   async function fetchVacancies(event) {
     try {
+      setIsLoadingIndustries(true);
       event.preventDefault();
       const { payment_from, payment_to, industry } = form.values;
       setFilter({ payment_from, payment_to, industry, searchQuery });
@@ -24,6 +25,7 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies, activePage }) => {
         },
       });
       setVacancies(data.objects);
+      setIsLoadingIndustries(false);
     } catch (error) {
       console.log(error);
     }
@@ -63,13 +65,13 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies, activePage }) => {
   });
 
   return (
-    <form className="bg-white p-5 rounded-lg border border-gray-200 w-[300px]">
+    <form className="bg-white p-5 rounded-lg border border-gray-200 w-full sm:w-[300px]">
       <div className="flex justify-between gap-2 items-center ">
         <h1 className="font-bold text-xl">Фильтры</h1>
         <div
           onClick={() => {
             form.setValues({
-              industry: "",
+              industry: [],
               payment_from: "",
               payment_to: "",
             });
@@ -86,6 +88,7 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies, activePage }) => {
       <div className="py-5">
         <h2 className="font-bold py-[6px]">Отрасль</h2>
         <MultiSelect
+          className="hover:bg-[#C9E0FF]"
           data-elem="industry-select"
           placeholder="Выберете отрасль"
           data={industries.map((industry) => ({

@@ -12,27 +12,29 @@ const VacanciesList = ({
   const { setValue, storedValue } = useLocalStorage("favorites", "");
   const [vacancies, setVacancies] = React.useState([]);
 
-  React.useEffect(() => {
-    findTotalPage(vacancies);
-  }, [vacancies.length]);
+  // React.useEffect(() => {
+  //   findTotalPage(vacancies);
+  // }, [vacancies.length]);
 
   React.useEffect(() => {
     setVacancies(filterVacancies);
   }, [filterVacancies]);
 
-  if (storedValue.length > 0) {
-  }
   React.useEffect(() => {
-    const vac = [...vacancies, ...storedValue];
-
-    vac.filter(
-      (value, index, self) =>
-        index ===
-        self.findIndex(
-          (t) => t.id === value.id && t.profession === value.profession
-        )
-    );
-    setVacancies(vac);
+    if (storedValue > 0) {
+      const vac = [...vacancies, ...storedValue];
+      storedValue.map((vl) => {
+        const index = vac.findIndex(
+          (vacancy) =>
+            vacancy.profession === vl.profession && vacancy.isFavorite == false
+        );
+        console.log(index);
+        if (index != -1) {
+          vac.splice(index, 1);
+        }
+      });
+      setVacancies(vac);
+    }
   }, [storedValue]);
   console.log(vacancies);
   if (vacancies.length == 0) {

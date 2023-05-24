@@ -18,9 +18,12 @@ const FavoritesPage = () => {
           <div className=" flex flex-col gap-8 justify-center items-center">
             <HumanIcon />
             <h1 className="font-bold text-xl">Упс, здесь ещё ничего нет!</h1>
-            <Button className="bg-[#DEECFF] text-[#5E96FC] hover:text-[white]">
-              <Link to="/">Поиск Вакансий</Link>
-            </Button>
+
+            <Link to="/">
+              <Button className="bg-[#DEECFF] text-[#5E96FC] hover:text-[white]">
+                Поиск Вакансий
+              </Button>
+            </Link>
           </div>
         </div>
       )}

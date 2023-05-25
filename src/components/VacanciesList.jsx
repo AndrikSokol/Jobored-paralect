@@ -17,7 +17,7 @@ const VacanciesList = ({
   console.log(storedValue);
   const vacanciesFromAPI = [];
   React.useEffect(() => {
-    if (filter.length > 0) {
+    if (filterVacancies.length > 0) {
       setVacancies(filterVacancies);
     }
   }, [filterVacancies]);

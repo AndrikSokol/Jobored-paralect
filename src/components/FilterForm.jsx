@@ -7,7 +7,6 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies, activePage }) => {
   const [industries, setIndustries] = React.useState([]);
   async function fetchVacancies(event) {
     try {
-      setIsLoadingIndustries(true);
       event.preventDefault();
       const { payment_from, payment_to, industry } = form.values;
       setFilter({ payment_from, payment_to, industry, searchQuery });
@@ -25,7 +24,6 @@ const FilterForm = ({ searchQuery, setFilter, setVacancies, activePage }) => {
         },
       });
       setVacancies(data.objects);
-      setIsLoadingIndustries(false);
     } catch (error) {
       console.log(error);
     }

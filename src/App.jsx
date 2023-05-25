@@ -1,4 +1,3 @@
-import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import IndexPage from "./pages/IndexPage";
 import Layout from "./components/Layout";
@@ -13,6 +12,7 @@ function App() {
           <Route index element={<IndexPage />}></Route>
           <Route path="/favorites" element={<FavoritesPage />}></Route>
           <Route path="/vacancy/:id" element={<VacancyPage />}></Route>
+          <Route path="*" element={<IndexPage />} />
         </Route>
       </Routes>
     </UserContextProvider>

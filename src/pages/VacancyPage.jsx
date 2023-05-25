@@ -24,8 +24,15 @@ const VacancyPage = () => {
           }
         );
 
-        setVacancy({ ...data, isFavorite: true });
-
+        const index = storedValue.find(
+          (vl) => data.id === vl.id && data.profession === vl.profession
+        );
+        console.log(index);
+        if (index != undefined) {
+          setVacancy({ ...data, isFavorite: true });
+        } else {
+          setVacancy({ ...data, isFavorite: false });
+        }
         setIsVacanciesLoading(false);
       } catch (error) {
         console.log(error);

@@ -14,7 +14,7 @@ export function UserContextProvider({ children }) {
           { headers: { "x-secret-key": "GEU4nvd3rej*jeh.eqp" } }
         );
         console.log(data);
-        setAccesstoken(data.access_token);
+        setAccessToken(data.access_token);
       } catch (error) {
         console.log(error);
       }

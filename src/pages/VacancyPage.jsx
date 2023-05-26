@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const VacancyPage = () => {
   const { id } = useParams();
   const [vacancy, setVacancy] = React.useState({});
-  const { setValue, storedValue } = useLocalStorage("favorites", "");
+  const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
   React.useEffect(() => {
     async function fetchVacancy() {
@@ -23,36 +23,48 @@ const VacancyPage = () => {
             },
           }
         );
-
         const index = storedValue.find(
           (vl) => data.id === vl.id && data.profession === vl.profession
         );
-        console.log(index);
-        if (index != undefined) {
-          setVacancy({ ...data, isFavorite: true });
-        } else {
+        if (index === undefined) {
           setVacancy({ ...data, isFavorite: false });
+        } else {
+          setVacancy({ ...data, isFavorite: true });
         }
-        setIsVacanciesLoading(false);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsVacanciesLoading(false);
       }
     }
     fetchVacancy();
   }, []);
-  function handleFavorite(vacancy) {
-    if (vacancy.isFavorite == true) {
-      vacancy.isFavorite = !vacancy.isFavorite;
-      setValue(
-        storedValue.filter((vl) => {
-          vl.id !== vacancy.id;
-        })
-      );
+
+  function handleFavorite() {
+    if (vacancy.isFavorite) {
+      setVacancy((prev) => ({ ...prev, isFavorite: false }));
     } else {
-      setValue(storedValue, vacancy);
-      vacancy.isFavorite = !vacancy.isFavorite;
+      setVacancy((prev) => ({ ...prev, isFavorite: true }));
     }
   }
+
+  React.useEffect(() => {
+    if (Object.keys(vacancy).length) {
+      if (vacancy.isFavorite) {
+        const index = storedValue.find(
+          (vl) => vacancy.id === vl.id && vacancy.profession === vl.profession
+        );
+        if (index === undefined) {
+          setValue([...storedValue, vacancy]);
+        }
+      } else {
+        const newStoredValue = storedValue.filter(
+          (vl) => vacancy.id !== vl.id && vacancy.profession !== vl.profession
+        );
+        setValue(newStoredValue);
+      }
+    }
+  }, [vacancy]);
   return (
     <div className="max-w-[80%]  mx-auto py-10">
       {isVacanciesLoading ? (
@@ -70,7 +82,7 @@ const VacancyPage = () => {
 
               <button
                 data-elem={`vacancy-${vacancy.id}-shortlist-button`}
-                onClick={() => handleFavorite(vacancy)}
+                onClick={() => handleFavorite()}
               >
                 {vacancy.isFavorite ? (
                   <svg

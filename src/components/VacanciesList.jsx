@@ -11,7 +11,7 @@ const VacanciesList = ({
   filterVacancies,
   activePage,
 }) => {
-  const { setValue, storedValue } = useLocalStorage("favorites", "");
+  const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [vacancies, setVacancies] = React.useState([]);
   const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
   console.log(storedValue);

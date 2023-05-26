@@ -6,7 +6,7 @@ import VacanciesItem from "../components/VacanciesItem";
 import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
 const FavoritesPage = () => {
-  const { setValue, storedValue } = useLocalStorage("favorites", "");
+  const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [favorities, setFavorities] = React.useState(storedValue);
   function addFavorites() {
     setValue(favorities.filter((vacancy) => vacancy.isFavorite === true));

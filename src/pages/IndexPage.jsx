@@ -17,7 +17,7 @@ const IndexPage = () => {
   let search;
 
   return (
-    <div className=" py-10 max-w-[80%] mx-auto">
+    <div className=" py-10 max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto">
       <div className="grid sm:flex  mx-auto justify-center gap-[28px] ">
         <div>
           <FilterForm
@@ -55,7 +55,7 @@ const IndexPage = () => {
               <Button
                 data-elem="search-button"
                 onClick={findSearchingVacancies}
-                className="bg-[#5E96FC] mr-[50px] h-[28px] rounded-lg "
+                className="bg-[#5E96FC] mr-[50px] sm:h-[28px] rounded-lg "
               >
                 Поиск
               </Button>

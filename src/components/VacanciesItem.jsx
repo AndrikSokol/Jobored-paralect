@@ -1,12 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useLocalStorage from "../hooks/uselocalStorage";
 
-const VacanciesItem = ({ vacancy, addFavorites }) => {
+const VacanciesItem = ({ vacancy, toogleFavorites }) => {
+  const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [isFavotire, setIsFavorite] = React.useState(vacancy.isFavorite);
-  async function handleFavorite(vacancy) {
+  function handleFavorite(vacancy) {
     setIsFavorite((prev) => !prev);
     vacancy.isFavorite = !vacancy.isFavorite;
-    addFavorites();
+    toogleFavorites(vacancy);
   }
 
   return (

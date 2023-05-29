@@ -9,8 +9,13 @@ import useLocalStorage from "../hooks/uselocalStorage";
 const FavoritesPage = () => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [favorities, setFavorities] = React.useState(storedValue);
-  function addFavorites() {
-    setValue(favorities.filter((vacancy) => vacancy.isFavorite === true));
+
+  function toogleFavorites(vacancy) {
+    if (vacancy.isFavorite) {
+      setValue([...storedValue, vacancy]);
+    } else {
+      setValue(storedValue.filter((value) => value.id !== vacancy.id));
+    }
   }
   React.useEffect(() => {
     setFavorities(storedValue);
@@ -36,7 +41,7 @@ const FavoritesPage = () => {
             data-elem={`vacancy-${favorite.id}`}
             key={v4()}
             vacancy={favorite}
-            addFavorites={addFavorites}
+            toogleFavorites={toogleFavorites}
           />
         ))
       )}

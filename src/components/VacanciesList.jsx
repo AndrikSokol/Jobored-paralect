@@ -14,7 +14,6 @@ const VacanciesList = ({
   const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [vacancies, setVacancies] = React.useState([]);
   const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
-  console.log(storedValue);
   const vacanciesFromAPI = [];
   React.useEffect(() => {
     if (filterVacancies.length > 0) {
@@ -43,10 +42,11 @@ const VacanciesList = ({
               vacanciesFromAPI.push({ ...object, isFavorite: false });
             });
             concatVacanciesAndStoredValue();
-            setIsVacanciesLoading(false);
           });
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsVacanciesLoading(false);
       }
     }
     fetchVacancies();
@@ -80,8 +80,12 @@ const VacanciesList = ({
   }
   const searchedVacancies = getSearchedVacancies();
 
-  function addFavorites() {
-    setValue(vacancies.filter((vacancy) => vacancy.isFavorite === true));
+  function toogleFavorites(vacancy) {
+    if (vacancy.isFavorite) {
+      setValue([...storedValue, vacancy]);
+    } else {
+      setValue(storedValue.filter((value) => value.id !== vacancy.id));
+    }
   }
 
   return (
@@ -93,7 +97,7 @@ const VacanciesList = ({
             key={v4()}
             data-elem={`vacancy-${vacancy.id}`}
             vacancy={vacancy}
-            addFavorites={addFavorites}
+            toogleFavorites={toogleFavorites}
           />
         ))}
     </>

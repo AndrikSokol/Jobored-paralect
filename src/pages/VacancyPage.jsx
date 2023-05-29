@@ -23,10 +23,7 @@ const VacancyPage = () => {
             },
           }
         );
-        const index = storedValue.find(
-          (vl) => data.id === vl.id && data.profession === vl.profession
-        );
-        if (index === undefined) {
+        if (findVacancy(data) === undefined) {
           setVacancy({ ...data, isFavorite: false });
         } else {
           setVacancy({ ...data, isFavorite: true });
@@ -40,6 +37,11 @@ const VacancyPage = () => {
     fetchVacancy();
   }, []);
 
+  function findVacancy(vacancy) {
+    return storedValue.find(
+      (vl) => vacancy.id === vl.id && vacancy.profession === vl.profession
+    );
+  }
   function handleFavorite() {
     if (vacancy.isFavorite) {
       setVacancy((prev) => ({ ...prev, isFavorite: false }));
@@ -51,10 +53,7 @@ const VacancyPage = () => {
   React.useEffect(() => {
     if (Object.keys(vacancy).length) {
       if (vacancy.isFavorite) {
-        const index = storedValue.find(
-          (vl) => vacancy.id === vl.id && vacancy.profession === vl.profession
-        );
-        if (index === undefined) {
+        if (findVacancy(vacancy) === undefined) {
           setValue([...storedValue, vacancy]);
         }
       } else {

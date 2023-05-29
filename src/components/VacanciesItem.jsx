@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Link } from "react-router-dom";
 import useLocalStorage from "../hooks/uselocalStorage";
 
@@ -8,7 +8,7 @@ const VacanciesItem = ({ vacancy, toogleFavorites }) => {
   function handleFavorite(vacancy) {
     setIsFavorite((prev) => !prev);
     vacancy.isFavorite = !vacancy.isFavorite;
-    toogleFavorites(vacancy);
+    toogleFavorites(vacancy, storedValue, setValue);
   }
 
   return (
@@ -114,4 +114,4 @@ const VacanciesItem = ({ vacancy, toogleFavorites }) => {
   );
 };
 
-export default VacanciesItem;
+export default memo(VacanciesItem);

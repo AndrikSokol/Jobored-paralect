@@ -5,6 +5,7 @@ import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
 import HumanIcon from "./UI/HumanIcon";
 import Loader from "./UI/Loader/Loader";
+import { toogleFavorites } from "../utils/favorites";
 const VacanciesList = ({
   searchQuery,
   filter,
@@ -80,14 +81,6 @@ const VacanciesList = ({
   }
   const searchedVacancies = getSearchedVacancies();
 
-  function toogleFavorites(vacancy) {
-    if (vacancy.isFavorite) {
-      setValue([...storedValue, vacancy]);
-    } else {
-      setValue(storedValue.filter((value) => value.id !== vacancy.id));
-    }
-  }
-
   return (
     <>
       {isVacanciesLoading && <Loader />}
@@ -97,7 +90,9 @@ const VacanciesList = ({
             key={v4()}
             data-elem={`vacancy-${vacancy.id}`}
             vacancy={vacancy}
-            toogleFavorites={toogleFavorites}
+            toogleFavorites={() =>
+              toogleFavorites(vacancy, storedValue, setValue)
+            }
           />
         ))}
     </>

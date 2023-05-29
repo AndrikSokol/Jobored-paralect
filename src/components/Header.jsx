@@ -11,7 +11,7 @@ const Header = () => {
   React.useEffect(() => {
     window.addEventListener("storage", listenStorage);
     return () => window.removeEventListener("storage", listenStorage);
-  }, []);
+  }, [storedValue]);
 
   function listenStorage(e) {
     if (e.key === "favorites") {

@@ -2,13 +2,14 @@ import React from "react";
 import { TextInput, Button, Pagination } from "@mantine/core";
 import FilterForm from "../components/FilterForm";
 import VacanciesList from "../components/VacanciesList";
+import { getPages } from "../components/utils/pages";
 
 const IndexPage = () => {
   const [activePage, setActivePage] = React.useState(1);
-  const [pages, setPages] = React.useState(25);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filter, setFilter] = React.useState({});
   const [totalCount, setTotalCount] = React.useState();
+  const [limit, setLimit] = React.useState(20);
   let search;
 
   function findSearchingVacancies(event) {
@@ -61,13 +62,14 @@ const IndexPage = () => {
             filter={filter}
             activePage={activePage}
             setTotalCount={setTotalCount}
+            limit={limit}
           />
 
           <div className="mt-10 flex justify-center">
             <Pagination
               value={activePage}
               onChange={setActivePage}
-              total={Math.ceil(totalCount / 20)}
+              total={getPages(totalCount, limit)}
             />
           </div>
         </div>

@@ -7,7 +7,7 @@ import HumanIcon from "./UI/HumanIcon";
 import Loader from "./UI/Loader/Loader";
 import { toogleFavorites } from "./utils/favorites";
 import { findVacancy } from "./utils/vacancy";
-const VacanciesList = ({ searchQuery, filter, activePage }) => {
+const VacanciesList = ({ searchQuery, filter, activePage, setTotalCount }) => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [vacancies, setVacancies] = React.useState([]);
   const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
@@ -24,6 +24,7 @@ const VacanciesList = ({ searchQuery, filter, activePage }) => {
               params: {
                 published: 1,
                 page: activePage,
+                count: 20,
                 keyword: searchQuery,
                 payment_from: filter?.payment_from,
                 payment_to: filter?.payment_to,
@@ -40,7 +41,9 @@ const VacanciesList = ({ searchQuery, filter, activePage }) => {
           .then(({ data }) => {
             data.objects.map((object) => {
               vacanciesFromAPI.push({ ...object, isFavorite: false });
+              setTotalCount(data.total);
             });
+
             concatVacanciesAndStoredValue();
           });
       } catch (error) {

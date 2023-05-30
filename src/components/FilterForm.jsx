@@ -3,12 +3,11 @@ import { useForm } from "@mantine/form";
 import { NumberInput, Button, CloseButton, MultiSelect } from "@mantine/core";
 import axios from "axios";
 
-const FilterForm = ({ searchQuery, setFilter }) => {
+const FilterForm = ({ setFilter }) => {
   const [industries, setIndustries] = React.useState([]);
   function addFilter(event) {
     try {
       event.preventDefault();
-      // const { payment_from, payment_to, industry } = form.values;
       setFilter(form.values);
     } catch (error) {
       console.log(error);

@@ -8,7 +8,7 @@ const IndexPage = () => {
   const [pages, setPages] = React.useState(25);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filter, setFilter] = React.useState({});
-
+  const [totalCount, setTotalCount] = React.useState();
   let search;
 
   function findSearchingVacancies(event) {
@@ -60,13 +60,14 @@ const IndexPage = () => {
             searchQuery={searchQuery}
             filter={filter}
             activePage={activePage}
+            setTotalCount={setTotalCount}
           />
 
           <div className="mt-10 flex justify-center">
             <Pagination
               value={activePage}
               onChange={setActivePage}
-              total={25}
+              total={Math.ceil(totalCount / 20)}
             />
           </div>
         </div>

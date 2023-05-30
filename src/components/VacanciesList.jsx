@@ -18,40 +18,38 @@ const VacanciesList = ({
   const [vacancies, setVacancies] = React.useState([]);
   const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
   const vacanciesFromAPI = [];
+
   React.useEffect(() => {
-    function fetchVacancies() {
+    async function fetchVacancies() {
       try {
         setIsVacanciesLoading(true);
-        setVacancies([]);
-        axios
-          .get(
-            `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/`,
-            {
-              params: {
-                published: 1,
-                page: activePage,
-                count: limit,
-                keyword: searchQuery,
-                payment_from: filter?.payment_from,
-                payment_to: filter?.payment_to,
-                catalogues: filter?.industy,
-              },
+        const { data } = await axios.get(
+          `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/`,
+          {
+            params: {
+              published: 1,
+              page: activePage,
+              count: limit,
+              keyword: searchQuery,
+              payment_from: filter?.payment_from,
+              payment_to: filter?.payment_to,
+              catalogues: filter?.industy,
+            },
 
-              headers: {
-                "x-secret-key": " GEU4nvd3rej*jeh.eqp",
-                "X-Api-App-Id":
-                  "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
-              },
-            }
-          )
-          .then(({ data }) => {
-            data.objects.map((object) => {
-              vacanciesFromAPI.push({ ...object, isFavorite: false });
-              setTotalCount(data.total);
-            });
-
-            concatVacanciesAndStoredValue();
-          });
+            headers: {
+              "x-secret-key": " GEU4nvd3rej*jeh.eqp",
+              "X-Api-App-Id":
+                "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
+            },
+          }
+        );
+        data.objects.map((object) => {
+          vacanciesFromAPI.push({ ...object, isFavorite: false });
+        });
+        if (data.objects.length !== 0) {
+          setTotalCount(data.total);
+        }
+        concatVacanciesAndStoredValue();
       } catch (error) {
         console.log(error);
       } finally {
@@ -75,9 +73,24 @@ const VacanciesList = ({
     }
   }
 
+  if (isVacanciesLoading) {
+    return (
+      <div>
+        <Loader />
+      </div>
+    );
+  }
+
+  if (vacancies?.length === 0 && !isVacanciesLoading) {
+    return (
+      <div className="w-full flex flex-col justify-center items-center my-10">
+        <HumanIcon />
+        <h1 className="font-bold text-xl">Упс, здесь ещё ничего нет!</h1>
+      </div>
+    );
+  }
   return (
     <>
-      {isVacanciesLoading && <Loader />}
       {vacancies?.length > 0 &&
         vacancies.map((vacancy) => (
           <VacanciesItem

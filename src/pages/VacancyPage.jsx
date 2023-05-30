@@ -5,8 +5,8 @@ import useLocalStorage from "../hooks/uselocalStorage";
 import Loader from "../components/UI/Loader/Loader";
 import { Link } from "react-router-dom";
 import VacanciesItem from "../components/VacanciesItem";
-import { toogleFavorites } from "../components/utils/favorites";
-import { findVacancy } from "../components/utils/vacancy";
+import { toogleFavorites } from "../utils/favorites";
+import { findVacancy } from "../utils/vacancy";
 const VacancyPage = () => {
   const { id } = useParams();
   const [vacancy, setVacancy] = React.useState({});

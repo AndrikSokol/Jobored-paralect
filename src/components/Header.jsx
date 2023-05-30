@@ -1,23 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import useLocalStorage from "../hooks/uselocalStorage";
 
 const Header = () => {
-  const { setValue, storedValue } = useLocalStorage("favorites", []);
   const { pathname } = useLocation();
-  const [numberOfFavorites, setNumberOfFavorites] = React.useState(
-    storedValue.length
-  );
-  React.useEffect(() => {
-    window.addEventListener("storage", listenStorage);
-    return () => window.removeEventListener("storage", listenStorage);
-  }, [storedValue]);
-
-  function listenStorage(e) {
-    if (e.key === "favorites") {
-      setNumberOfFavorites(storedValue.length);
-    }
-  }
 
   let subpage;
   if (pathname === "/") subpage = "home";
@@ -72,11 +57,11 @@ const Header = () => {
           >
             <div className="hidden sm:flex">Избранное</div>
             <div className="sm:hidden relative">
-              {subpage !== "favorites" && (
+              {/* {subpage !== "favorites" && (
                 <div className="absolute top-[-10px] right-[-5px] text-white font-bold rounded-md px-[2px]   bg-[#5E96FC]">
                   {numberOfFavorites}
                 </div>
-              )}
+              )} */}
               <svg
                 className={
                   subpage === "favorites"

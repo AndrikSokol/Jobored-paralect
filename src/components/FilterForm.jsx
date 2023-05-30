@@ -48,8 +48,8 @@ const FilterForm = ({ setFilter }) => {
   });
 
   return (
-    <form className="bg-white p-5 rounded-lg border border-gray-200 w-full sm:w-[300px]">
-      <div className="flex justify-between gap-2 items-center ">
+    <form className="bg-white p-5 rounded-lg border border-gray-200 w-[300px]">
+      <div className="flex justify-between gap-2 items-center">
         <h1 className="font-bold text-xl">Фильтры</h1>
         <div
           onClick={() => {

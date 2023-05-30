@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import VacanciesItem from "../components/VacanciesItem";
 import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
-import { toogleFavorites } from "../components/utils/favorites";
+import { toogleFavorites } from "../utils/favorites";
 
 const FavoritesPage = () => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);

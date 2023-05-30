@@ -2,7 +2,7 @@ import React from "react";
 import { TextInput, Button, Pagination } from "@mantine/core";
 import FilterForm from "../components/FilterForm";
 import VacanciesList from "../components/VacanciesList";
-import { getPages } from "../components/utils/pages";
+import { getPages } from "../utils/pages";
 
 const IndexPage = () => {
   const [activePage, setActivePage] = React.useState(1);
@@ -19,8 +19,8 @@ const IndexPage = () => {
 
   return (
     <div className=" py-10 max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto">
-      <div className="grid sm:flex  mx-auto justify-center gap-[28px] ">
-        <div>
+      <div className="grid md:flex  mx-auto justify-center gap-[28px] ">
+        <div className="mx-auto  ">
           <FilterForm searchQuery={searchQuery} setFilter={setFilter} />
         </div>
         <div className="w-full">

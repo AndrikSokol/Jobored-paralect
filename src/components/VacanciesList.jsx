@@ -5,8 +5,8 @@ import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
 import HumanIcon from "./UI/HumanIcon";
 import Loader from "./UI/Loader/Loader";
-import { toogleFavorites } from "./utils/favorites";
-import { findVacancy } from "./utils/vacancy";
+import { toogleFavorites } from "../utils/favorites";
+import { findVacancy } from "../utils/vacancy";
 const VacanciesList = ({
   searchQuery,
   filter,
@@ -72,6 +72,8 @@ const VacanciesList = ({
       setVacancies(vacanciesFromAPI);
     }
   }
+
+  // React.useMemo(() => {}, [filter, searchQuery]);
 
   if (isVacanciesLoading) {
     return (

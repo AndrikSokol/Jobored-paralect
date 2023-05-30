@@ -5,6 +5,7 @@ import useLocalStorage from "../hooks/uselocalStorage";
 const VacanciesItem = ({ vacancy, toogleFavorites }) => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [isFavotire, setIsFavorite] = React.useState(vacancy.isFavorite);
+
   function handleFavorite(vacancy) {
     setIsFavorite((prev) => !prev);
     vacancy.isFavorite = !vacancy.isFavorite;
@@ -16,7 +17,7 @@ const VacanciesItem = ({ vacancy, toogleFavorites }) => {
       <div className="flex items-center justify-between">
         <Link
           to={"/vacancy/" + vacancy.id}
-          className="font-bold text-xl text-[#5E96FC]"
+          className="font-bold text-xl text-[#5E96FC] "
         >
           {vacancy.profession}
         </Link>
@@ -58,7 +59,7 @@ const VacanciesItem = ({ vacancy, toogleFavorites }) => {
         </button>
       </div>
       <div className="py-3 flex flex-col lg:flex-row items-start lg:items-center gap-3">
-        <p>
+        <p className=" font-medium">
           з/п{" "}
           {vacancy.payment_to - vacancy.payment_from <= 0
             ? "Не указана"

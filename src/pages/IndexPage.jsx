@@ -8,24 +8,19 @@ const IndexPage = () => {
   const [pages, setPages] = React.useState(25);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filter, setFilter] = React.useState({});
-  const [vacancies, setVacancies] = React.useState([]);
+
+  let search;
 
   function findSearchingVacancies(event) {
     event.preventDefault();
     setSearchQuery(search);
   }
-  let search;
 
   return (
     <div className=" py-10 max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto">
       <div className="grid sm:flex  mx-auto justify-center gap-[28px] ">
         <div>
-          <FilterForm
-            activePage={activePage}
-            searchQuery={searchQuery}
-            setFilter={setFilter}
-            setVacancies={setVacancies}
-          />
+          <FilterForm searchQuery={searchQuery} setFilter={setFilter} />
         </div>
         <div className="w-full">
           <TextInput
@@ -64,7 +59,6 @@ const IndexPage = () => {
           <VacanciesList
             searchQuery={searchQuery}
             filter={filter}
-            filterVacancies={vacancies}
             activePage={activePage}
           />
 

@@ -5,8 +5,8 @@ import useLocalStorage from "../hooks/uselocalStorage";
 import Loader from "../components/UI/Loader/Loader";
 import { Link } from "react-router-dom";
 import VacanciesItem from "../components/VacanciesItem";
-import { toogleFavorites } from "../utils/favorites";
-
+import { toogleFavorites } from "../components/utils/favorites";
+import { findVacancy } from "../components/utils/vacancy";
 const VacancyPage = () => {
   const { id } = useParams();
   const [vacancy, setVacancy] = React.useState({});
@@ -26,7 +26,7 @@ const VacancyPage = () => {
             },
           }
         );
-        if (findVacancy(data) === undefined) {
+        if (findVacancy(data, storedValue) === undefined) {
           setVacancy({ ...data, isFavorite: false });
         } else {
           setVacancy({ ...data, isFavorite: true });
@@ -39,12 +39,6 @@ const VacancyPage = () => {
     }
     fetchVacancy();
   }, []);
-
-  function findVacancy(vacancy) {
-    return storedValue.find(
-      (vl) => vacancy.id === vl.id && vacancy.profession === vl.profession
-    );
-  }
 
   return (
     <div className="max-w-[80%]  mx-auto py-10">

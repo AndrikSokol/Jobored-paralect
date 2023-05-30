@@ -1,27 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import VacanciesItem from "./VacanciesItem";
 import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
 import HumanIcon from "./UI/HumanIcon";
 import Loader from "./UI/Loader/Loader";
-import { toogleFavorites } from "../utils/favorites";
-const VacanciesList = ({
-  searchQuery,
-  filter,
-  filterVacancies,
-  activePage,
-}) => {
+import { toogleFavorites } from "./utils/favorites";
+import { findVacancy } from "./utils/vacancy";
+const VacanciesList = ({ searchQuery, filter, activePage }) => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [vacancies, setVacancies] = React.useState([]);
   const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
   const vacanciesFromAPI = [];
-  React.useEffect(() => {
-    if (filterVacancies.length > 0) {
-      setVacancies(filterVacancies);
-    }
-  }, [filterVacancies]);
-
   React.useEffect(() => {
     function fetchVacancies() {
       try {
@@ -29,8 +19,17 @@ const VacanciesList = ({
         setVacancies([]);
         axios
           .get(
-            `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/?page=${activePage}`,
+            `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/`,
             {
+              params: {
+                published: 1,
+                page: activePage,
+                keyword: searchQuery,
+                payment_from: filter?.payment_from,
+                payment_to: filter?.payment_to,
+                catalogues: filter?.industy,
+              },
+
               headers: {
                 "x-secret-key": " GEU4nvd3rej*jeh.eqp",
                 "X-Api-App-Id":
@@ -51,16 +50,12 @@ const VacanciesList = ({
       }
     }
     fetchVacancies();
-  }, [activePage]);
+  }, [activePage, filter, searchQuery]);
 
   function concatVacanciesAndStoredValue() {
     if (storedValue.length > 0) {
       const newVacancies = vacanciesFromAPI.map((vacancy) => {
-        const index = storedValue.find(
-          (vl) => vacancy.id === vl.id && vacancy.profession === vl.profession
-        );
-        console.log(index);
-        if (index != undefined) {
+        if (findVacancy(vacancy, storedValue) != undefined) {
           vacancy.isFavorite = true;
         }
         return vacancy;
@@ -71,21 +66,11 @@ const VacanciesList = ({
     }
   }
 
-  function getSearchedVacancies() {
-    if (searchQuery) {
-      return vacancies.filter((vacancy) =>
-        vacancy.profession.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    return vacancies;
-  }
-  const searchedVacancies = getSearchedVacancies();
-
   return (
     <>
       {isVacanciesLoading && <Loader />}
-      {searchedVacancies?.length > 0 &&
-        searchedVacancies.map((vacancy) => (
+      {vacancies?.length > 0 &&
+        vacancies.map((vacancy) => (
           <VacanciesItem
             key={v4()}
             data-elem={`vacancy-${vacancy.id}`}

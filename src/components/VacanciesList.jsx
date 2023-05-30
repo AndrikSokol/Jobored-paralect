@@ -16,13 +16,12 @@ const VacanciesList = ({
 }) => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [vacancies, setVacancies] = React.useState([]);
-  const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
+  const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(true);
   const vacanciesFromAPI = [];
 
   React.useEffect(() => {
     async function fetchVacancies() {
       try {
-        setIsVacanciesLoading(true);
         const { data } = await axios.get(
           `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/`,
           {

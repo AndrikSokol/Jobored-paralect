@@ -7,7 +7,7 @@ import HumanIcon from "./UI/HumanIcon";
 import Loader from "./UI/Loader/Loader";
 import { toogleFavorites } from "../utils/favorites";
 import { findVacancy } from "../utils/vacancy";
-import { IVacancy, IVacancyData } from "../types/vacancy.interface";
+import { IVacancy, IVacanciesData } from "../types/vacancy.interface";
 import { IFilter } from "../types/filter.interface";
 
 type VacanciesListProps = {
@@ -35,7 +35,7 @@ const VacanciesList: FC<VacanciesListProps> = ({
     async function fetchVacancies() {
       try {
         setIsVacanciesLoading(true);
-        const { data } = await axios.get(
+        const { data } = await axios.get<IVacanciesData>(
           `https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/`,
           {
             params: {

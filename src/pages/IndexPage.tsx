@@ -1,11 +1,11 @@
-import React, { MouseEvent } from "react";
+import React, { FC, MouseEvent } from "react";
 import { TextInput, Button, Pagination } from "@mantine/core";
 import FilterForm from "../components/FilterForm";
 import VacanciesList from "../components/VacanciesList";
 import { getPages } from "../utils/pages";
 import { IFilter } from "../types/filter.interface";
 
-const IndexPage = () => {
+const IndexPage: FC = () => {
   const [activePage, setActivePage] = React.useState<number>(1);
   const [searchQuery, setSearchQuery] = React.useState<string>("");
   const [filter, setFilter] = React.useState<IFilter>({} as IFilter);

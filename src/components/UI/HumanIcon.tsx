@@ -1,6 +1,6 @@
-import React from "react";
+import React, { FC, memo } from "react";
 
-const HumanIcon = () => {
+const HumanIcon: FC = () => {
   return (
     <svg
       width="241"
@@ -457,4 +457,4 @@ const HumanIcon = () => {
   );
 };
 
-export default HumanIcon;
+export default memo(HumanIcon);

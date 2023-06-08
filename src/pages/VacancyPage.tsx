@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import useLocalStorage from "../hooks/uselocalStorage";
@@ -7,11 +7,15 @@ import { Link } from "react-router-dom";
 import VacanciesItem from "../components/VacanciesItem";
 import { toogleFavorites } from "../utils/favorites";
 import { findVacancy } from "../utils/vacancy";
-const VacancyPage = () => {
-  const { id } = useParams();
-  const [vacancy, setVacancy] = React.useState({});
+import { IVacancy } from "../types/vacancy.interface";
+
+const VacancyPage: FC = () => {
+  const { id } = useParams<string>();
+  const [vacancy, setVacancy] = React.useState<IVacancy>({} as IVacancy);
   const { setValue, storedValue } = useLocalStorage("favorites", []);
-  const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(false);
+  const [isVacanciesLoading, setIsVacanciesLoading] =
+    React.useState<boolean>(false);
+
   React.useEffect(() => {
     async function fetchVacancy() {
       try {

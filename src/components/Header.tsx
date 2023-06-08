@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-const Header = () => {
+const Header: FC = () => {
   const { pathname } = useLocation();
 
-  let subpage;
+  let subpage: string | undefined;
   if (pathname === "/") subpage = "home";
   else if (pathname === "/favorites") subpage = "favorites";
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { Dispatch, FC, useContext } from "react";
 import axios from "axios";
 import VacanciesItem from "./VacanciesItem";
 import { v4 } from "uuid";
@@ -7,7 +7,18 @@ import HumanIcon from "./UI/HumanIcon";
 import Loader from "./UI/Loader/Loader";
 import { toogleFavorites } from "../utils/favorites";
 import { findVacancy } from "../utils/vacancy";
-const VacanciesList = ({
+import { IVacancy, IVacancyData } from "../types/vacancy.interface";
+import { IFilter } from "../types/filter.interface";
+
+type VacanciesListProps = {
+  searchQuery: string;
+  filter: IFilter;
+  activePage: number;
+  setTotalCount: Dispatch<React.SetStateAction<number>>;
+  limit: number;
+};
+
+const VacanciesList: FC<VacanciesListProps> = ({
   searchQuery,
   filter,
   activePage,
@@ -15,9 +26,10 @@ const VacanciesList = ({
   limit,
 }) => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);
-  const [vacancies, setVacancies] = React.useState([]);
-  const [isVacanciesLoading, setIsVacanciesLoading] = React.useState(true);
-  const vacanciesFromAPI = [];
+  const [vacancies, setVacancies] = React.useState<IVacancy[]>([]);
+  const [isVacanciesLoading, setIsVacanciesLoading] =
+    React.useState<boolean>(true);
+  const vacanciesFromAPI: IVacancy[] = [];
 
   React.useEffect(() => {
     async function fetchVacancies() {
@@ -33,7 +45,7 @@ const VacanciesList = ({
               keyword: searchQuery,
               payment_from: filter?.payment_from,
               payment_to: filter?.payment_to,
-              catalogues: filter?.industy,
+              catalogues: filter?.industry,
             },
 
             headers: {
@@ -43,7 +55,7 @@ const VacanciesList = ({
             },
           }
         );
-        data.objects.map((object) => {
+        data.objects.map((object: IVacancy) => {
           vacanciesFromAPI.push({ ...object, isFavorite: false });
         });
         if (data.objects.length !== 0) {

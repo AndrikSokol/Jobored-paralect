@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import HumanIcon from "../components/UI/HumanIcon";
 import { Button } from "@mantine/core";
 import { Link } from "react-router-dom";
@@ -6,10 +6,11 @@ import VacanciesItem from "../components/VacanciesItem";
 import { v4 } from "uuid";
 import useLocalStorage from "../hooks/uselocalStorage";
 import { toogleFavorites } from "../utils/favorites";
+import { IVacancy } from "../types/vacancy.interface";
 
-const FavoritesPage = () => {
+const FavoritesPage: FC = () => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);
-  const [favorities, setFavorities] = React.useState(storedValue);
+  const [favorities, setFavorities] = React.useState<IVacancy[]>(storedValue);
 
   React.useEffect(() => {
     setFavorities(storedValue);
@@ -31,7 +32,7 @@ const FavoritesPage = () => {
           </div>
         </div>
       ) : (
-        favorities.map((favorite) => (
+        favorities.map((favorite: IVacancy) => (
           <VacanciesItem
             data-elem={`vacancy-${favorite.id}`}
             key={v4()}

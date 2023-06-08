@@ -1,12 +1,27 @@
-import React, { memo } from "react";
+import React, { memo, FC } from "react";
 import { Link } from "react-router-dom";
 import useLocalStorage from "../hooks/uselocalStorage";
+import { IVacancy } from "../types/vacancy.interface";
 
-const VacanciesItem = ({ vacancy, toogleFavorites }) => {
+type VacanciesItemProps = {
+  vacancy: IVacancy;
+  toogleFavorites: (
+    vacancy: IVacancy,
+    storedValue: IVacancy[],
+    setValue: (value: IVacancy[]) => void
+  ) => void;
+};
+
+const VacanciesItem: FC<VacanciesItemProps> = ({
+  vacancy,
+  toogleFavorites,
+}) => {
   const { setValue, storedValue } = useLocalStorage("favorites", []);
-  const [isFavotire, setIsFavorite] = React.useState(vacancy.isFavorite);
+  const [isFavotire, setIsFavorite] = React.useState<boolean>(
+    vacancy.isFavorite
+  );
 
-  function handleFavorite(vacancy) {
+  function handleFavorite(vacancy: IVacancy) {
     setIsFavorite((prev) => !prev);
     vacancy.isFavorite = !vacancy.isFavorite;
     toogleFavorites(vacancy, storedValue, setValue);

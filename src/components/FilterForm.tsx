@@ -1,11 +1,22 @@
-import React from "react";
+import React, { Dispatch, FC, SetStateAction } from "react";
 import { useForm } from "@mantine/form";
 import { NumberInput, Button, CloseButton, MultiSelect } from "@mantine/core";
 import axios from "axios";
+import { MouseEvent } from "react";
+import { IIndustry } from "../types/industry.interface";
+import { ICatalogy } from "../types/catalogy.interface";
+import { IFilter } from "../types/filter.interface";
 
-const FilterForm = ({ setFilter }) => {
-  const [industries, setIndustries] = React.useState([]);
-  function addFilter(event) {
+type FilterFormProps = {
+  setFilter: Dispatch<SetStateAction<IFilter>>;
+};
+
+const FilterForm: FC<FilterFormProps> = ({ setFilter }) => {
+  const [industries, setIndustries] = React.useState<IIndustry[]>([]);
+
+  function addFilter(
+    event: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLHeadingElement>
+  ) {
     try {
       event.preventDefault();
       setFilter(form.values);
@@ -13,10 +24,11 @@ const FilterForm = ({ setFilter }) => {
       console.log(error);
     }
   }
+
   React.useEffect(() => {
     async function fetchIndustries() {
       try {
-        const { data } = await axios.get(
+        const { data } = await axios.get<ICatalogy[]>(
           "https://startup-summer-2023-proxy.onrender.com/2.0/catalogues",
           {
             headers: {
@@ -26,7 +38,7 @@ const FilterForm = ({ setFilter }) => {
             },
           }
         );
-        data.map((industry) => {
+        data.map((industry: IIndustry) => {
           setIndustries((prev) => [
             ...prev,
             { title_rus: industry.title_rus, key: industry.key },
@@ -39,11 +51,11 @@ const FilterForm = ({ setFilter }) => {
     fetchIndustries();
   }, []);
 
-  const form = useForm({
+  const form = useForm<IFilter>({
     initialValues: {
       industry: [],
-      payment_from: "",
-      payment_to: "",
+      payment_from: undefined,
+      payment_to: undefined,
     },
   });
 
@@ -55,8 +67,8 @@ const FilterForm = ({ setFilter }) => {
           onClick={() => {
             form.setValues({
               industry: [],
-              payment_from: "",
-              payment_to: "",
+              payment_from: undefined,
+              payment_to: undefined,
             });
           }}
           className="flex items-center gap-1"
@@ -81,7 +93,7 @@ const FilterForm = ({ setFilter }) => {
           className="hover:bg-[#C9E0FF]"
           data-elem="industry-select"
           placeholder="Выберете отрасль"
-          data={industries.map((industry) => ({
+          data={industries.map((industry: IIndustry) => ({
             value: industry.key,
             label: industry.title_rus,
           }))}

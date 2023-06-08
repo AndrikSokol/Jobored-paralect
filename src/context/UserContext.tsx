@@ -1,10 +1,19 @@
-import { createContext, useEffect, useState } from "react";
+import {
+  FC,
+  PropsWithChildren,
+  createContext,
+  useEffect,
+  useState,
+} from "react";
 import axios from "axios";
+import { typeAccessToken } from "../types/user.type";
 
 export const UserContext = createContext({});
 
-export function UserContextProvider({ children }) {
-  const [accessToken, setAccessToken] = useState("");
+export const UserContextProvider: FC<PropsWithChildren<unknown>> = ({
+  children,
+}) => {
+  const [accessToken, setAccessToken] = useState<typeAccessToken>(null);
 
   useEffect(() => {
     async function fetchUser() {
@@ -28,4 +37,4 @@ export function UserContextProvider({ children }) {
       {children}
     </UserContext.Provider>
   );
-}
+};

@@ -1,18 +1,19 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 import { TextInput, Button, Pagination } from "@mantine/core";
 import FilterForm from "../components/FilterForm";
 import VacanciesList from "../components/VacanciesList";
 import { getPages } from "../utils/pages";
+import { IFilter } from "../types/filter.interface";
 
 const IndexPage = () => {
-  const [activePage, setActivePage] = React.useState(1);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [filter, setFilter] = React.useState({});
-  const [totalCount, setTotalCount] = React.useState();
-  const [limit, setLimit] = React.useState(20);
-  let search;
+  const [activePage, setActivePage] = React.useState<number>(1);
+  const [searchQuery, setSearchQuery] = React.useState<string>("");
+  const [filter, setFilter] = React.useState<IFilter>({} as IFilter);
+  const [totalCount, setTotalCount] = React.useState<number>(0);
+  const [limit, setLimit] = React.useState<number>(20);
+  let search: string;
 
-  function findSearchingVacancies(event) {
+  function findSearchingVacancies(event: MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
     setSearchQuery(search);
   }
@@ -21,14 +22,14 @@ const IndexPage = () => {
     <div className=" py-10 max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto">
       <div className="grid md:flex  mx-auto justify-center gap-[28px] ">
         <div className="mx-auto  ">
-          <FilterForm searchQuery={searchQuery} setFilter={setFilter} />
+          <FilterForm setFilter={setFilter} />
         </div>
         <div className="w-full">
           <TextInput
             data-elem="search-input"
             onChange={(event) => (search = event.target.value)}
             size="md"
-            raduis="lg"
+            radius="lg"
             icon={
               <svg
                 width="15"

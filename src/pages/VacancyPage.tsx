@@ -1,13 +1,12 @@
 import React, { FC } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import useLocalStorage from "../hooks/uselocalStorage";
 import Loader from "../components/UI/Loader/Loader";
-import { Link } from "react-router-dom";
 import VacanciesItem from "../components/VacanciesItem";
 import { toogleFavorites } from "../utils/favorites";
 import { findVacancy } from "../utils/vacancy";
 import { IVacancy } from "../types/vacancy.interface";
+import { getVacancy } from "../services/vacanciesService";
 
 const VacancyPage: FC = () => {
   const { id } = useParams<string>();
@@ -20,16 +19,7 @@ const VacancyPage: FC = () => {
     async function fetchVacancy() {
       try {
         setIsVacanciesLoading(true);
-        const { data } = await axios.get(
-          "https://startup-summer-2023-proxy.onrender.com/2.0/vacancies/" + id,
-          {
-            headers: {
-              "x-secret-key": " GEU4nvd3rej*jeh.eqp",
-              "X-Api-App-Id":
-                "v3.r.137440105.ffdbab114f92b821eac4e21f485343924a773131.06c3bdbb8446aeb91c35b80c42ff69eb9c457948",
-            },
-          }
-        );
+        const data = await getVacancy(id);
         if (findVacancy(data, storedValue) === undefined) {
           setVacancy({ ...data, isFavorite: false });
         } else {

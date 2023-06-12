@@ -1,5 +1,5 @@
 import React, { memo, FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useLocalStorage from "../hooks/uselocalStorage";
 import { IVacancy } from "../types/vacancy.interface";
 
@@ -20,22 +20,29 @@ const VacanciesItem: FC<VacanciesItemProps> = ({
   const [isFavotire, setIsFavorite] = React.useState<boolean>(
     vacancy.isFavorite
   );
+  const { pathname } = useLocation();
+  let subpage: string | undefined;
+  if (pathname.includes("/vacancy/")) subpage = "vacancy";
 
   function handleFavorite(vacancy: IVacancy) {
     setIsFavorite((prev) => !prev);
     vacancy.isFavorite = !vacancy.isFavorite;
     toogleFavorites(vacancy, storedValue, setValue);
   }
-
+  debugger;
   return (
     <div className=" bg-white p-6 rounded-lg mt-4 border border-gray-300">
       <div className="flex items-center justify-between">
-        <Link
-          to={"/vacancy/" + vacancy.id}
-          className="font-bold text-xl text-[#5E96FC] hover:scale-[101%] easy-in-out active:hover:text-[#2d74f8] duration-100 "
-        >
-          {vacancy.profession}
-        </Link>
+        {subpage ? (
+          <h1 className="font-bold text-xl "> {vacancy.profession}</h1>
+        ) : (
+          <Link
+            to={"/vacancy/" + vacancy.id}
+            className="font-bold text-xl text-[#5E96FC] hover:scale-[101%] easy-in-out active:hover:text-[#2d74f8] duration-100 "
+          >
+            {vacancy.profession}
+          </Link>
+        )}
 
         <button
           data-elem={`vacancy-${vacancy.id}-shortlist-button`}

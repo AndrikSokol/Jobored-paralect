@@ -29,7 +29,7 @@ const Header: FC = () => {
               fill="#5E96FC"
             />
           </svg>
-          <h1 className="font-bold  text-2xl">Jabored</h1>
+          <h1 className="font-bold  text-2xl">Jobored</h1>
         </Link>
 
         <div className="w-full flex justify-center gap-[60px] items-center ">

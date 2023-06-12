@@ -71,7 +71,7 @@ const FilterForm: FC<FilterFormProps> = ({ setFilter }) => {
               payment_to: undefined,
             });
           }}
-          className="flex items-center gap-1"
+          className="flex items-center gap-1 hover:scale-[102%]"
         >
           <h2
             onClick={addFilter}
@@ -81,7 +81,7 @@ const FilterForm: FC<FilterFormProps> = ({ setFilter }) => {
           </h2>
           <CloseButton
             onClick={addFilter}
-            title="Close popover"
+            title="Сбросить фильтр"
             size="lg"
             iconSize={12}
           />

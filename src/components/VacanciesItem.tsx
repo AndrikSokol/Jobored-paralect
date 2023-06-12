@@ -32,7 +32,7 @@ const VacanciesItem: FC<VacanciesItemProps> = ({
       <div className="flex items-center justify-between">
         <Link
           to={"/vacancy/" + vacancy.id}
-          className="font-bold text-xl text-[#5E96FC] "
+          className="font-bold text-xl text-[#5E96FC] hover:scale-[101%] easy-in-out active:hover:text-[#2d74f8] duration-100 "
         >
           {vacancy.profession}
         </Link>

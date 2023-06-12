@@ -11,7 +11,10 @@ const Header: FC = () => {
   return (
     <header className="bg-white p-6">
       <div className="max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto flex">
-        <Link to="/" className="flex gap-4 sm:gap-2 items-center">
+        <Link
+          to="/"
+          className="flex gap-4 sm:gap-2 items-center hover:scale-[101%] duration-100"
+        >
           <svg
             width="30"
             height="30"
@@ -29,9 +32,11 @@ const Header: FC = () => {
           <h1 className="font-bold  text-2xl">Jabored</h1>
         </Link>
 
-        <div className="w-full flex justify-center gap-[60px] items-center">
+        <div className="w-full flex justify-center gap-[60px] items-center ">
           <Link to="/" className={subpage === "home" ? " text-[#5E96FC]" : ""}>
-            <div className="hidden sm:flex">Поиск Вакансий</div>
+            <div className="hidden sm:flex  hover:scale-[101%] duration-100">
+              Поиск Вакансий
+            </div>
             <svg
               className={
                 subpage === "home"
@@ -55,7 +60,9 @@ const Header: FC = () => {
             to="/favorites"
             className={subpage === "favorites" ? " sm:text-[#5E96FC]" : ""}
           >
-            <div className="hidden sm:flex">Избранное</div>
+            <div className="hidden sm:flex hover:scale-[101%] duration-100">
+              Избранное
+            </div>
             <div className="sm:hidden relative">
               {/* {subpage !== "favorites" && (
                 <div className="absolute top-[-10px] right-[-5px] text-white font-bold rounded-md px-[2px]   bg-[#5E96FC]">

@@ -13,7 +13,7 @@ const VacancyPage: FC = () => {
   const [vacancy, setVacancy] = React.useState<IVacancy>({} as IVacancy);
   const { setValue, storedValue } = useLocalStorage("favorites", []);
   const [isVacanciesLoading, setIsVacanciesLoading] =
-    React.useState<boolean>(false);
+    React.useState<boolean>(true);
 
   React.useEffect(() => {
     async function fetchVacancy() {
@@ -35,7 +35,7 @@ const VacancyPage: FC = () => {
   }, []);
 
   return (
-    <div className="max-w-[80%]  mx-auto py-10">
+    <div className="max-w-[60%]  mx-auto py-10">
       {isVacanciesLoading ? (
         <Loader />
       ) : (

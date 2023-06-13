@@ -29,10 +29,10 @@ const VacanciesItem: FC<VacanciesItemProps> = ({
     vacancy.isFavorite = !vacancy.isFavorite;
     toogleFavorites(vacancy, storedValue, setValue);
   }
-  debugger;
+
   return (
     <div className=" bg-white p-6 rounded-lg mt-4 border border-gray-300">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-1 justify-between">
         {subpage ? (
           <h1 className="font-bold text-xl "> {vacancy.profession}</h1>
         ) : (

@@ -17,7 +17,7 @@ const FavoritesPage: FC = () => {
   }, [storedValue]);
 
   return (
-    <div className="max-w-[80%]  mx-auto">
+    <div className="max-w-[60%]  mx-auto">
       {favorities.length == 0 ? (
         <div className=" mt-[120px]">
           <div className=" flex flex-col gap-8 justify-center items-center">

@@ -11,6 +11,7 @@ const IndexPage: FC = () => {
   const [filter, setFilter] = React.useState<IFilter>({} as IFilter);
   const [totalCount, setTotalCount] = React.useState<number>(0);
   const [limit, setLimit] = React.useState<number>(20);
+  const [isFirstShowForm, SetIsFirstShow] = React.useState<boolean>(false);
   let search: string;
 
   function findSearchingVacancies(event: MouseEvent<HTMLButtonElement>) {
@@ -18,15 +19,22 @@ const IndexPage: FC = () => {
     setSearchQuery(search);
   }
 
+  React.useEffect(() => {
+    SetIsFirstShow(true);
+  }, []);
+
   return (
     <div className=" py-10 max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto">
       <div className="grid md:flex  mx-auto justify-center gap-[28px] ">
         <div className="mx-auto  ">
-          <FilterForm setFilter={setFilter} />
+          <FilterForm setFilter={setFilter} isFirstShowForm={isFirstShowForm} />
         </div>
-        <div className="w-full">
+        <div className="w-full ">
           <TextInput
             data-elem="search-input"
+            className={`"relative transition  duration-1000 z-[9] ${
+              isFirstShowForm ? " opacity-full" : "translate-y-[-200%] "
+            }`}
             onChange={(event) => (search = event.target.value)}
             size="md"
             radius="lg"

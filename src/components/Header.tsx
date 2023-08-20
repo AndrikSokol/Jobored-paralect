@@ -9,11 +9,11 @@ const Header: FC = () => {
   else if (pathname === "/favorites") subpage = "favorites";
 
   return (
-    <header className="bg-white p-6">
+    <header className="bg-white p-6 z-10 relative ">
       <div className="max-w-[95%] sm:max-w-[85%] lg:max-w-[80%] mx-auto flex">
         <Link
           to="/"
-          className="flex gap-4 sm:gap-2 items-center hover:scale-[101%] duration-100"
+          className="flex gap-4 sm:gap-2 items-center hover:translate-x-[1%] duration-100"
         >
           <svg
             width="30"
@@ -34,7 +34,7 @@ const Header: FC = () => {
 
         <div className="w-full flex justify-center gap-[60px] items-center ">
           <Link to="/" className={subpage === "home" ? " text-[#5E96FC]" : ""}>
-            <div className="hidden sm:flex  hover:scale-[101%] duration-100">
+            <div className="hidden sm:flex  hover:translate-x-[1%] duration-100">
               Поиск Вакансий
             </div>
             <svg
@@ -60,7 +60,7 @@ const Header: FC = () => {
             to="/favorites"
             className={subpage === "favorites" ? " sm:text-[#5E96FC]" : ""}
           >
-            <div className="hidden sm:flex hover:scale-[101%] duration-100">
+            <div className="hidden sm:flex  hover:translate-x-[1%] duration-100">
               Избранное
             </div>
             <div className="sm:hidden relative">

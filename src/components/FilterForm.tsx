@@ -9,9 +9,10 @@ import { IFilter } from "../types/filter.interface";
 
 type FilterFormProps = {
   setFilter: Dispatch<SetStateAction<IFilter>>;
+  isFirstShowForm: Boolean;
 };
 
-const FilterForm: FC<FilterFormProps> = ({ setFilter }) => {
+const FilterForm: FC<FilterFormProps> = ({ setFilter, isFirstShowForm }) => {
   const [industries, setIndustries] = React.useState<IIndustry[]>([]);
 
   function addFilter(
@@ -60,7 +61,11 @@ const FilterForm: FC<FilterFormProps> = ({ setFilter }) => {
   });
 
   return (
-    <form className="bg-white p-5 rounded-lg border border-gray-200 w-[300px]">
+    <form
+      className={`bg-white p-5 rounded-lg border border-gray-200 w-[300px]   transition ease-in-out duration-700  ${
+        isFirstShowForm ? " " : "translate-x-[-220%]"
+      }`}
+    >
       <div className="flex justify-between gap-2 items-center">
         <h1 className="font-bold text-xl">Фильтры</h1>
         <div

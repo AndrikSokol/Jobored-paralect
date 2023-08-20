@@ -32,8 +32,10 @@ const IndexPage: FC = () => {
         <div className="w-full ">
           <TextInput
             data-elem="search-input"
-            className={`"relative transition  duration-1000 z-[9] ${
-              isFirstShowForm ? " opacity-full" : "translate-y-[-200%] "
+            className={`"relative transition-all  duration-1000 z-[9] ${
+              isFirstShowForm
+                ? " opacity-full"
+                : "translate-y-[-200%] opacity-0 "
             }`}
             onChange={(event) => (search = event.target.value)}
             size="md"

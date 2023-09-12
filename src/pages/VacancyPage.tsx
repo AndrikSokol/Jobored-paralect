@@ -12,8 +12,7 @@ const VacancyPage: FC = () => {
   const { id } = useParams<string>();
   const [vacancy, setVacancy] = React.useState<IVacancy>({} as IVacancy);
   const { setValue, storedValue } = useLocalStorage("favorites", []);
-  const [isVacanciesLoading, setIsVacanciesLoading] =
-    React.useState<boolean>(true);
+  const [isVacanciesLoading, setIsVacanciesLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     async function fetchVacancy() {
@@ -35,7 +34,7 @@ const VacancyPage: FC = () => {
   }, []);
 
   return (
-    <div className="max-w-[60%]  mx-auto py-10">
+    <div className=" mx-2 xl:max-w-[60%]  sm:mx-auto py-10">
       {isVacanciesLoading ? (
         <Loader />
       ) : (
@@ -43,14 +42,10 @@ const VacancyPage: FC = () => {
           <VacanciesItem
             data-elem={`vacancy-${vacancy.id}`}
             vacancy={vacancy}
-            toogleFavorites={() =>
-              toogleFavorites(vacancy, storedValue, setValue)
-            }
+            toogleFavorites={() => toogleFavorites(vacancy, storedValue, setValue)}
           />
           <div className=" bg-white p-6 rounded-lg mt-5  border border-gray-300">
-            <div
-              dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}
-            ></div>
+            <div dangerouslySetInnerHTML={{ __html: vacancy.vacancyRichText }}></div>
           </div>
         </div>
       )}
